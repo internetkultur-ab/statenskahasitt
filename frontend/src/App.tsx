@@ -1,34 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
+import { Input } from "./components/Input";
 
 function App() {
-  const [count, setCount] = useState(0)
+	const [billAmount, setBillAmount] = useState<number>(0);
+	const [gross, setGross] = useState<number>(0);
+	const [net, setNet] = useState<number>(0);
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+	let employmentFee = Math.round(gross * 0.3142);
+
+	return (
+		<main>
+			<section>
+				<form style={{ minWidth: "0" }}>
+					<Input
+						label="Belopp exkl moms"
+						value={billAmount}
+						onChange={(value) => {
+							setBillAmount(value);
+							setGross(Math.round(value / 1.3142));
+							setNet(Math.round((value / 1.3142) * 0.7));
+						}}
+					/>
+					<Input label="Arbetsgivaravgift" value={employmentFee} disabled />
+					<Input
+						label="Lön före skatt"
+						value={gross}
+						onChange={(value) => {
+							setBillAmount(Math.round(value * 1.3142));
+							setGross(value);
+							setNet(Math.round(value * 0.7));
+						}}
+					/>
+					<Input
+						label="Lön efter 30 % skatt"
+						value={net}
+						onChange={(value) => {
+							setBillAmount(Math.round((value * 1.3142) / 0.7));
+							setGross(Math.round(value / 0.7));
+							setNet(value);
+						}}
+					/>
+				</form>
+			</section>
+		</main>
+	);
 }
 
-export default App
+export default App;
