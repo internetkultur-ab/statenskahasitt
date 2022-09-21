@@ -21,7 +21,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses:  internetkultur-ab/statenskahasitt/frontend/@main
+    - uses:  internetkultur-ab/statenskahasitt/frontend/package-lock.json@main
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
