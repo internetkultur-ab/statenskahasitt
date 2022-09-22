@@ -1,8 +1,8 @@
 interface InputProps {
 	label: string;
-	value: number;
+	value: number | "";
 	name: string;
-	onChange?: (value: number) => void;
+	onChange?: (value: number | "") => void;
 	disabled?: boolean;
 	tag?: string;
 }
@@ -29,7 +29,7 @@ export const Input = ({
 				type="number"
 				value={value}
 				onChange={(e) => {
-					let value = +e.target.value;
+					let value: "" | number = e.target.value === "" ? "" : +e.target.value;
 					onChange && onChange(value);
 				}}
 				disabled={disabled}
