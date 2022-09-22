@@ -10,15 +10,32 @@ export const Calculator = ({}: CalculatorProps): JSX.Element => {
 	] = useTaxCalculations();
 
 	return (
-		<form style={{ minWidth: "0" }}>
+		<>
 			<Input
-				label="Belopp exkl moms"
+				name="billAmount"
+				label="Belopp exkl. moms"
 				value={billAmount}
+				tag="fakturabelopp"
 				onChange={onBillChange}
 			/>
-			<Input label="Arbetsgivaravgift" value={employmentFee} disabled />
-			<Input label="Lön före skatt" value={gross} onChange={onGrossChange} />
-			<Input label="Lön efter 30 % skatt" value={net} onChange={onNetChange} />
-		</form>
+			<Input
+				name="employmentFee"
+				label="Arbetsgivaravgift"
+				value={employmentFee}
+				disabled
+			/>
+			<Input
+				name="gross"
+				label="Lön före skatt"
+				value={gross}
+				onChange={onGrossChange}
+			/>
+			<Input
+				name="net"
+				label="Lön efter 30 % skatt"
+				value={net}
+				onChange={onNetChange}
+			/>
+		</>
 	);
 };
