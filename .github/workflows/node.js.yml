@@ -36,6 +36,6 @@ jobs:
         username: ${{ secrets.USERNAME }}
         passphrase: ${{ secrets.PASSPHRASE }}
         key: ${{ secrets.KEY }}
-        source: "dist/index.html"
+        source: "dist"
         target: "test-scp"
 
