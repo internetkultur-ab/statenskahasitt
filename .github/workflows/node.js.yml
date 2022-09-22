@@ -38,4 +38,5 @@ jobs:
         key: ${{ secrets.KEY }}
         source: "dist"
         target: "statenskahasitt.se"
+        rm: true
 
