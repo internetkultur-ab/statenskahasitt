@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Input } from "./components/Input";
+import mvp from "mvp.css"
 
 function App() {
 	const [billAmount, setBillAmount] = useState<number>(0);
@@ -9,11 +10,12 @@ function App() {
 	let employmentFee = Math.round(gross * 0.3142);
 
 	return (
-		<main>
-			<section>
-				<form style={{ minWidth: "0" }}>
+				<aside>
+					<p>Här kan du räkna ut hur mycket som blir över till dig efter att staten har tagit sin del.</p>
+					<p>&nbsp;</p>
+					<label for="billAmount">Belopp ex moms <sup>fakturabelopp</sup></label>
 					<Input
-						label="Belopp exkl moms"
+						id="billAmount"
 						value={billAmount}
 						onChange={(value) => {
 							setBillAmount(value);
@@ -21,9 +23,11 @@ function App() {
 							setNet(Math.round((value / 1.3142) * 0.7));
 						}}
 					/>
-					<Input label="Arbetsgivaravgift" value={employmentFee} disabled />
+					<label for="employmentFee">Arbetsgivaravgift</label>
+					<Input id="employmentFee" value={employmentFee} disabled />
+					<label for="gross">Lön före skatt</label>
 					<Input
-						label="Lön före skatt"
+						id="gross"
 						value={gross}
 						onChange={(value) => {
 							setBillAmount(Math.round(value * 1.3142));
@@ -31,8 +35,9 @@ function App() {
 							setNet(Math.round(value * 0.7));
 						}}
 					/>
+					<label for="net">Lön efter 30 % skatt</label>
 					<Input
-						label="Lön efter 30 % skatt"
+						id="net"
 						value={net}
 						onChange={(value) => {
 							setBillAmount(Math.round((value * 1.3142) / 0.7));
@@ -40,9 +45,7 @@ function App() {
 							setNet(value);
 						}}
 					/>
-				</form>
-			</section>
-		</main>
+				</aside>
 	);
 }
 

@@ -6,16 +6,16 @@ interface InputProps {
 }
 
 export const Input = ({
-	label,
+	id,
 	value,
 	onChange,
 	disabled,
 }: InputProps): JSX.Element => {
 	return (
-		<label>
-			{label}
 			<input
 				type="number"
+				id={id}
+				name={id}
 				value={value}
 				onChange={(e) => {
 					let value = +e.target.value;
@@ -23,6 +23,5 @@ export const Input = ({
 				}}
 				disabled={disabled}
 			/>
-		</label>
 	);
 };
