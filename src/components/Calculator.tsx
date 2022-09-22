@@ -4,10 +4,13 @@ import { Input } from "./Input";
 interface CalculatorProps {}
 
 export const Calculator = ({}: CalculatorProps): JSX.Element => {
+	const valueFromPath = window.location.pathname.split("/").filter(Boolean)[0];
 	const [
 		{ billAmount, employmentFee, gross, net },
 		{ onBillChange, onGrossChange, onNetChange },
-	] = useTaxCalculations();
+	] = useTaxCalculations(
+		Number.isNaN(+valueFromPath) ? undefined : +valueFromPath
+	);
 
 	return (
 		<>

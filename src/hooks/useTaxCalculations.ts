@@ -1,9 +1,21 @@
 import { useMemo, useState } from "react";
 
-export const useTaxCalculations = () => {
-	const [billAmount, setBillAmount] = useState<number | "">("");
-	const [gross, setGross] = useState<number | "">("");
-	const [net, setNet] = useState<number | "">("");
+export const useTaxCalculations = (billAmountInitial?: number) => {
+	const initialState = {
+		billAmount: billAmountInitial,
+		gross: billAmountInitial
+			? Math.round(billAmountInitial / 1.3142)
+			: undefined,
+		net: billAmountInitial
+			? Math.round((billAmountInitial / 1.3142) * 0.7)
+			: undefined,
+	};
+
+	const [billAmount, setBillAmount] = useState<number | "">(
+		initialState.billAmount || ""
+	);
+	const [gross, setGross] = useState<number | "">(initialState.gross || "");
+	const [net, setNet] = useState<number | "">(initialState.net || "");
 
 	const handlers = useMemo(
 		() => ({
