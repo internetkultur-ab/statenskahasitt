@@ -37,5 +37,5 @@ jobs:
         passphrase: ${{ secrets.PASSPHRASE }}
         key: ${{ secrets.KEY }}
         source: "dist"
-        target: "test-scp"
+        target: "statenskahasitt.se"
 
