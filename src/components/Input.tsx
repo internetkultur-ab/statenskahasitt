@@ -26,7 +26,8 @@ export const Input = ({
 				{label} {tag && <sup>{tag}</sup>}
 			</label>
 			<input
-				type="number"
+				type="numeric"
+				pattern="[0-9]*"
 				value={value}
 				onChange={(e) => {
 					let value: "" | number = e.target.value === "" ? "" : +e.target.value;
