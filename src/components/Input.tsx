@@ -1,5 +1,5 @@
 interface InputProps {
-	label: string;
+	id: string;
 	value: number;
 	onChange?: (value: number) => void;
 	disabled?: boolean;

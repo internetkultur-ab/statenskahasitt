@@ -13,7 +13,7 @@ function App() {
 				<aside>
 					<p>Här kan du räkna ut hur mycket som blir över till dig efter att staten har tagit sin del.</p>
 					<p>&nbsp;</p>
-					<label for="billAmount">Belopp ex moms <sup>fakturabelopp</sup></label>
+					<label htmlFor="billAmount">Belopp ex moms <sup>fakturabelopp</sup></label>
 					<Input
 						id="billAmount"
 						value={billAmount}
@@ -23,9 +23,9 @@ function App() {
 							setNet(Math.round((value / 1.3142) * 0.7));
 						}}
 					/>
-					<label for="employmentFee">Arbetsgivaravgift</label>
+					<label htmlFor="employmentFee">Arbetsgivaravgift</label>
 					<Input id="employmentFee" value={employmentFee} disabled />
-					<label for="gross">Lön före skatt</label>
+					<label htmlFor="gross">Lön före skatt</label>
 					<Input
 						id="gross"
 						value={gross}
@@ -35,7 +35,7 @@ function App() {
 							setNet(Math.round(value * 0.7));
 						}}
 					/>
-					<label for="net">Lön efter 30 % skatt</label>
+					<label htmlFor="net">Lön efter 30 % skatt</label>
 					<Input
 						id="net"
 						value={net}
