@@ -1,19 +1,56 @@
-import { useTaxCalculations } from "../hooks/useTaxCalculations";
+import { availableTabellNr } from "../lib/taxTable";
+import type { TaxHandlers, TaxState } from "../hooks/useTaxCalculations";
 import { Input } from "./Input";
 
-interface CalculatorProps {}
+interface CalculatorProps {
+	state: TaxState;
+	handlers: TaxHandlers;
+}
 
-export const Calculator = ({}: CalculatorProps): JSX.Element => {
-	const valueFromPath = window.location.pathname.split("/").filter(Boolean)[0];
-	const [
-		{ billAmount, employmentFee, gross, net },
-		{ onBillChange, onGrossChange, onNetChange },
-	] = useTaxCalculations(
-		Number.isNaN(+valueFromPath) ? undefined : +valueFromPath
-	);
+export const Calculator = ({ state, handlers }: CalculatorProps): JSX.Element => {
+	const { billAmount, employmentFee, gross, net, taxMode, tabellNr } = state;
+	const {
+		onBillChange,
+		onGrossChange,
+		onNetChange,
+		onTaxModeChange,
+		onTabellNrChange,
+	} = handlers;
 
 	return (
 		<>
+			<div>
+				<input
+					id="mode-schablon"
+					type="radio"
+					name="taxMode"
+					checked={taxMode === "schablon"}
+					onChange={() => onTaxModeChange("schablon")}
+				/>{" "}
+				<label htmlFor="mode-schablon">Schablon 30&nbsp;%</label>{" "}
+				<input
+					id="mode-tabell"
+					type="radio"
+					name="taxMode"
+					checked={taxMode === "tabell"}
+					onChange={() => onTaxModeChange("tabell")}
+				/>{" "}
+				<label htmlFor="mode-tabell">Skattetabell</label>
+			</div>
+			{taxMode === "tabell" && (
+				<select
+					aria-label="Tabellnummer"
+					value={tabellNr}
+					style={{ width: "calc(100% - 1.6rem)" }}
+					onChange={(e) => onTabellNrChange(Number(e.target.value))}
+				>
+					{availableTabellNr.map((nr) => (
+						<option key={nr} value={nr}>
+							Tabell {nr}
+						</option>
+					))}
+				</select>
+			)}
 			<Input
 				name="billAmount"
 				label="Belopp exkl. moms"
@@ -35,7 +72,7 @@ export const Calculator = ({}: CalculatorProps): JSX.Element => {
 			/>
 			<Input
 				name="net"
-				label="Lön efter 30 % skatt"
+				label={taxMode === "schablon" ? "Lön efter 30 % skatt" : "Lön efter skatt"}
 				value={net}
 				onChange={onNetChange}
 			/>

@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { parseNumber } from "../lib/parseNumber";
+
 interface InputProps {
 	label: string;
 	value: number | "";
@@ -15,6 +18,11 @@ export const Input = ({
 	tag,
 	name,
 }: InputProps): JSX.Element => {
+	// Råtext medan fältet redigeras, så att inklistrade och delvis skrivna
+	// tal ("35 937,5") inte äts upp av nummertolkningen under tiden.
+	const [raw, setRaw] = useState<string | null>(null);
+	const display = raw ?? (value === "" ? "" : String(value));
+
 	return (
 		<div
 			style={{
@@ -26,13 +34,14 @@ export const Input = ({
 				{label} {tag && <sup>{tag}</sup>}
 			</label>
 			<input
-				type="number"
-				pattern="[0-9]*"
-				value={value}
+				type="text"
+				inputMode="decimal"
+				value={display}
 				onChange={(e) => {
-					let value: "" | number = e.target.value === "" ? "" : +e.target.value;
-					onChange && onChange(value);
+					setRaw(e.target.value);
+					onChange && onChange(parseNumber(e.target.value));
 				}}
+				onBlur={() => setRaw(null)}
 				disabled={disabled}
 			/>
 		</div>
